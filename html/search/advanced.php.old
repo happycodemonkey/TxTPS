@@ -1,0 +1,140 @@
+<?php require_once("../includes/db/common.inc.php"); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script type="text/javascript" src="/niftycube.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript">
+    window.onload=function(){
+    Nifty("div#menu li","top");
+  }
+</script>
+
+<link  rel="stylesheet" type="text/css" href="/css/main.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Test Problem Server</title>
+</head>
+<body>
+<div id="wrapper">
+	<div id="titlebar">
+		<?php include("../includes/templating/title.inc.php"); ?>
+	</div>
+	<div id="login">
+		<?php require("../includes/templating/login.inc.php"); ?>
+	</div>
+	<div id="menu">
+		<?php include("./menu.inc.php"); ?>
+	</div>
+	<div id="sidemenu">
+		<?php include("./submenu.inc.php");?>
+	</div>
+	<div id="content" style="width:55em;">
+		<h1>Advanced Search</h1>
+	<?php
+
+	if(count($_GET) < 1){
+	  $cols = db_query("describe anamod_data", true);
+         
+          echo "<form>";
+          $groups;
+	  foreach($cols as $col){
+	    //attempt to determine the type of field
+	    $type = "String"; //default
+            $name = ucwords(str_replace('-', ' ', $col['Field']));
+            $name_parts  = (explode(' ' ,$name));
+            $group_name = $name_parts[0];
+            $groups[$group_name][] = $col;
+          }
+
+
+          foreach($groups as $group_name=>$cols){
+
+	    echo '<div class="column" style="width:150em;">';
+            echo '<fieldset>';
+             echo "<legend><b>$group_name</b></legend>";
+	     foreach($cols as $col){
+	       //attempt to determine the type of field
+	      $type = "String"; //default
+              $name = ucwords(str_replace('-', ' ', $col['Field']));
+              $name_parts  = (explode(' ' ,$name, 2));
+              $group = $name_parts[0];
+              $name = $name_parts[1];
+	      $field = $col['Field'];
+
+	      if(stristr($col['Type'], "double")){
+		 $type = "Double";
+	      }
+	    
+	      if(stristr($col['Type'], "int")){
+		 $type= "Integer";
+	      }
+
+	      echo '<p style="height:.75em;padding:.25em;"><label style="display:inline-block;width:18em;" for="' . $field . '">' . $name . '<em>&nbsp;(' . $type . ') </em></label>';
+
+	     
+	      echo '<select onchange="if(this.value.indexOf(\'<=>\') == 0){document.getElementById(\''.$field . '_compare' .'\').style.visibility=\'visible\'}else{document.getElementById(\''.$field . '_compare' .'\').style.visibility=\'hidden\'}" style="padding-left:.5em;padding-right:.5em;width:13em; "  type="text" name="'. $field. '_relation' .  '" id="'. $field. '"/></p>' ;
+	      
+	      echo '<option value="=">equal to </option>';
+	      if($type == "Double" || $type == "Integer"){
+		  echo '<option value="<=">less than or equal to </option>';
+		  echo '<option value=">=">greater than or equal to </option>';
+		  echo '<option value="<=>">between (inclusive)</option>';
+	       }
+	     
+	      echo "</select>";
+	      echo '<input  style="display:inline;margin-left:1em;margin-right:1em;" size="5" type="text" name="'. $field. '_1' . '" id="'. $field. '_1'. '"/>' ;
+	      echo "<span id='" . $field . "_compare' style=\"visibility:hidden;\">";
+		 echo "<b>AND</b>";
+	         echo '<input style="margin-left:1em;" size="5"  type="text" name="'. $field. '_2' . '" id="'. $field. '_2' .  '"/></p>' ;
+	      echo "</span>";
+	      }
+   
+	      echo "</fieldset>";
+	    echo '</div>';
+            }
+          echo '<p><input style="float:right;clear:both;font-size:1em;" type="submit" value="Search"></p>';
+	  echo "</form>";
+
+	}else{
+	  foreach($_GET as $key=>$value){
+	    if(strlen($value) > 0){
+	      //echo "<p>$key=>$value</p>";
+	    }
+	  }
+
+	  //build select statement
+	  $query = "SELECT * FROM anamod_data WHERE ";
+	  //needed for escape string
+	  db_connect();
+
+	  $first = true;
+	  foreach($_GET as $key=>$value){
+	    if(strlen($value) > 0){
+	      if($first){
+		$first = false;
+	      }else{
+		$query .= " AND ";
+	      }
+	      $key =  mysql_real_escape_string($key);
+	      $value = mysql_real_escape_string($value);
+	      $query .= " $key='$value' ";
+	    } 
+	  }
+	  //echo $query;
+	  $results = db_query($query, true);
+	  if(count($results) < 1){
+	    echo "<h2><b>No results found</b></h2>";
+	  }else{
+	    echo "<h2>Matrices</h2>";
+	  }
+	}
+
+
+		?>
+	</div>
+	<div id="footer">
+	</div>
+</div>
+</body>
+</html>
