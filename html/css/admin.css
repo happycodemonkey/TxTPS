@@ -1,0 +1,53 @@
+#content{
+
+}
+
+.section{
+ -moz-border-radius: 15px;
+ border-radius:15px;
+ background-color:#eee;
+ padding:1.5em;
+ padding-top:1.5em;
+ padding-bottom:1.5em;
+ margin:1em;
+ margin-top:2em;
+ margin-bottom:2em;
+}
+
+.section h2{
+ margin-top:-0.25em;
+}
+.section_save{
+  display:none;
+  margin-right:1em;
+  margin-top:1em;
+  float:right;
+}
+.section_status{
+ margin-right:1em;
+ font-weight:bold;
+}
+.section_actions{
+ border-top:solid 1px #ccc;
+ padding-top:.5em;
+ margin:0.25em;
+ margin-bottom:0;
+ font-size:1em;
+ font-weight:bold;
+}
+
+.tab{
+  display:block;
+  float:left;
+
+}
+
+.tab_button{
+  font-size:1.5em;
+  display:block;
+  width:10em;
+  height:2em;
+  margin-bottom:0.5em;
+   margin-left:-2em;
+   margin-right:-2em;
+}
