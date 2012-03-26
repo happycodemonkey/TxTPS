@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /includes/
+Disallow: /comments/
+Disallow: /js/
+Disallow: /old/
+Disallow: /test/
+Disallow: /admin/
+Disallow: /src/
+Disallow: /tags/
