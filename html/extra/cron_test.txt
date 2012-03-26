@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+MAILTO=jkneeland@gmail.com
+PATH=/opt/intel/compiler9.1//idb/bin:/opt/intel/compiler9.1//cc/bin:/opt/intel/compiler9.1//fc/bin:/usr/local/first:/usr/kerberos/bin:/opt/apps/epd_py25-4.1.30101-rh5-amd64/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:~/bin:.:/opt/apps/pki_apps:/opt/apps/lua/lua/bin:/opt/intel/compiler9.1//idb/bin:/opt/intel/compiler9.1//cc/bin:/opt/intel/compiler9.1//fc/bin
+
+ * * * * * export MODULEPATH=/opt/intel9/modulefiles:/opt/apps/modulefiles:/opt/modulefiles:/opt/apps/modulefiles ; export MODULESHOME=/opt/modules ; /opt/modules/bin/modulecmd bash load TACC; /opt/modules/bin/modulecmd bash load intel; /opt/apps/fem_generator/laplace/laplace-opt --output_dir /dev/null --nx 10 --ny 10 -d 2 --do_solve
+
