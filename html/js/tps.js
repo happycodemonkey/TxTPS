@@ -73,11 +73,12 @@ function tps_auth_login(){
 
   var request = {email: user_email, password: user_password};
 
-  var login_uri = "/api/login";
+  var login_uri = "tacc/login.php";
   $.ajax({type:"POST", url: login_uri, data: request,
   success:function(data,code){
     $("#login_dialog").find(".error").removeClass("error");
     var user_object  = JSON.parse(data);
+	console.log(data);
     user = user_object;
     $.modal.close(); //close login dialog
     tps_ui_customize();
@@ -89,12 +90,36 @@ function tps_auth_login(){
 }
 
 function tps_auth_logout(){
-  var logout_uri = "/api/logout";
+  var logout_uri = "tacc/logout.php";
   $.post(logout_uri);
   user = null;
   tps_ui_customize();
 }
 
+function tps_auth_register() {
+	var email = $("#register_dialog").find("input[name='email']").val();
+	var password = $("#register_dialog").find("input[name='password']").val();
+	var confirm_password = $("#register_dialog").find("input[name='confirm_password']").val();
+	
+	if (confirm_password == password) {
+		var reg_uri = "tacc/register.php";
+		var request = {email : email , password : password, classId : '1'};
+		$.ajax({type:"POST", url: reg_uri, data: request,	
+			success:function(data, code) {
+				$.modal.close();
+				//@TODO: send email w/ auth code ... see todo in includes/db/users.inc.php
+				//@TODO: need visual feedback when this is successful
+			},
+			error: function(data, code) {
+				//@TODO: visual feedback when failure happens
+			}
+		});
+	} else {
+		//@TODO: warn user passwords don't match
+	}
+
+	//@TODO: Security catches an exception but doesn't do anything about it
+}
 
 /***
 
@@ -106,7 +131,7 @@ function tps_auth_logout(){
 
 
 function tps_data(resource, query){
-  var uri = "/api/"+resource+"/" + query;
+  var uri = "/tacc/api.php?path="+resource+"/?" + query;
   var resource;
   $.ajax({url:uri, async: false, success: function(data){
     resource = JSON.parse(data);
@@ -427,7 +452,7 @@ function tps_build_createform(generator_id, default_values, notes){
 
       //forward if error or built
       if(status == "ERROR" || status == "BUILT"){
-	  var new_url = "/problems/" + problem.identifier;
+	  var new_url = "/tacc/api.php?path=problems/?identifier=" + problem.identifier;
 	  window.location = new_url;
       }
 
