@@ -71,7 +71,7 @@ switch($type){
   case "generators":
     $h = new GeneratorHandler();
     break;
-  case "products":
+  //case "products":
   case "problems":
     $h = new ProductHandler();
     break;
@@ -83,8 +83,6 @@ switch($type){
 //handle
 if($h != null){
   $h->handle($r);
-  
-
   //if we get here something went wrong
   $h->display_error(500, "The Server Was Unable To Complete This Request");
 }

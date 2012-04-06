@@ -1,14 +1,14 @@
 <?php
-require_once("/var/www/html/includes/classes/Security.class.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/classes/Security.class.php");
 
 //grab security object
 $security = Security::getInstance();
 
 $failed = false;
 if(isset($_POST['email']) && isset($_POST['password'])){
-	$failed = !$security->login($_POST['email'], trim($_POST['password']));
-	 	
-	if(!$failed)
+	$loggedin = $security->login($_POST['email'], trim($_POST['password']));
+
+	if($loggedin)
 	{
 	  $user_obj = new stdClass();
   	  $user_obj->email     = $security->getUser()->getEmail();

@@ -1,5 +1,5 @@
 <?php
-include_once("../includes/db/common.inc.php");
+include_once(getEnv("DOCUMENT_ROOT") . "/includes/db/common.inc.php");
 include_once("Handler.php");
 
 class ArgumentHandler extends Handler{

@@ -1,5 +1,5 @@
 <?php
-require_once("/var/www/html/includes/classes/Security.class.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/classes/Security.class.php");
 $security = Security::getInstance();
 $security->logout();
 ?>

@@ -1,7 +1,8 @@
 <?php
-include_once("../includes/db/common.inc.php");
+$doc_root = getEnv("DOCUMENT_ROOT");
+include_once($doc_root . "/includes/db/common.inc.php");
 include_once("Handler.php");
-require_once("../includes/classes/Security.class.php");
+require_once($doc_root . "/includes/classes/Security.class.php");
 
 class UserHandler extends Handler{
 

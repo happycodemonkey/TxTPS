@@ -60,7 +60,7 @@ abstract class Handler {
 
       //decompose search into fields      
       foreach($searchParts as $sPart){
-        if(strpos($spart, "=",2) < 0){
+        if(strpos($sPart, "=",2) < 0){
           continue; // not a valid search field 
 	}else{
 	  $fParts = explode("=", $sPart,2);
