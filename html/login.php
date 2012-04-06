@@ -1,5 +1,6 @@
 <?php
-require_once("./includes/classes/Security.class.php");
+$doc_root = getEnv("DOCUMENT_ROOT");
+require_once($doc_root . "/includes/classes/Security.class.php");
 
 //grab security object
 $security = Security::getInstance();
@@ -46,13 +47,13 @@ if(isset($_REQUEST['logout'])){
 <body>
 <div id="wrapper">
 	<div id="titlebar">
-		<?php include("./includes/templating/title.inc.php"); ?>
+		<?php include($doc_root . "/includes/templating/title.inc.php"); ?>
 	</div>
 	<div id="login">
-		<?php require("./includes/templating/login.inc.php"); ?>
+		<?php require($doc_root . "/includes/templating/login.inc.php"); ?>
 	</div> 
 	<div id="menu">
-		<?php include("./includes/templating/menu.inc.php"); ?>
+		<?php include($doc_root . "/includes/templating/menu.inc.php"); ?>
 	</div>
 	<div id="sidemenu">
 		<ul>

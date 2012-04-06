@@ -1,9 +1,9 @@
 <?php
 //include common header
-require_once("includes/common_code.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/common_code.php");
 
 //get news
-require_once("includes/db/common.inc.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/db/common.inc.php");
 $query = "SELECT * FROM news ORDER BY timestamp DESC";
 $stories = db_query($query,true);
 $featured_story = $stories[0];
