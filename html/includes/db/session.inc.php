@@ -5,8 +5,8 @@
  Purpose: Session/Security database abstraction
  Note: This file includes [common/properties].inc.php . Make sure not to include them, or use include_once. 
 */
-require_once(dirname(__FILE__) . "/common.inc.php");
-require_once(dirname(__FILE__) . "/users.inc.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/db/common.inc.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/db/users.inc.php");
 
 /*
 Returns a user id and writes into the session table if the login is correct or false on failure. 

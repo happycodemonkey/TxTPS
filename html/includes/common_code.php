@@ -1,6 +1,7 @@
 <?php
+$dir_root = getEnv("DOCUMENT_ROOT");
 //security 
-require_once("includes/classes/Security.class.php");
+require_once($dir_root . "/includes/classes/Security.class.php");
 $security = Security::getInstance();
 $user = null;
 if($security->isLoggedIn()){
@@ -16,12 +17,12 @@ if($security->isLoggedIn()){
 }
 
 // put full path to Smarty.class.php
-require('/opt/apps/Smarty/Smarty.class.php');
+require($dir_root . '/apps/Smarty/Smarty.class.php');
 $smarty = new Smarty();
-$smarty->setTemplateDir('smarty/templates');
-$smarty->setCompileDir('smarty/templates_c');
-$smarty->setCacheDir('smarty/cache');
-$smarty->setConfigDir('smarty/configs');
+$smarty->setTemplateDir($dir_root . '/smarty/templates');
+$smarty->setCompileDir($dir_root . '/smarty/templates_c');
+$smarty->setCacheDir($dir_root . '/smarty/cache');
+$smarty->setConfigDir($dir_root . '/smarty/configs');
 
 $smarty->assign("user",$user);
 ?>

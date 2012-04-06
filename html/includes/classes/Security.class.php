@@ -5,8 +5,8 @@
  Purpose: User information 
  Note: 
 */
-require_once(dirname(__FILE__) . "/../db/session.inc.php");
-require_once(dirname(__FILE__) . "/User.class.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/db/session.inc.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/classes/User.class.php");
 
 class Security{
 	//state vars
@@ -38,8 +38,8 @@ class Security{
 		$this->loggedIn = session_is_valid($this->sessionID);
 		
 		//HTTP vars
-		$this->referer = $_SERVER['HTTP_REFERER'];
-		$this->ip = $_SERVER['REMOTE_ADDR'];
+		$this->referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		$this->ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 		
 
 		$this->origin = $this->referer; 
@@ -66,17 +66,15 @@ class Security{
 	//user access methods
 	public function login($email, $password){
 
-		
 		//This is the original referer to the site
 	        if(!isset($this->origin)){
 			$_SESSION['origin'] = $this->referer;
-			
 		}else{
         		$this->origin = $_SESSION['origin'];
 		}
-		  
 
 		$result = session_login($email, $password, $this->sessionID, $this->ip);
+
 		if($result == true){
 			$this->loggedIn = true;
 			$this->update();

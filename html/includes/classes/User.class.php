@@ -5,7 +5,7 @@
  Purpose: User information 
  Note: 
 */
-require_once(dirname(__FILE__) . "/../db/users.inc.php");
+require_once(getEnv("DOCUMENT_ROOT") . "/includes/db/users.inc.php");
 
 
 class User{

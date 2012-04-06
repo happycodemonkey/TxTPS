@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  File: properties.inc.php
  Author: James Kneeland

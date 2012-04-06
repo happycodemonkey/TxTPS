@@ -5,7 +5,7 @@
  Purpose: User information database abstraction
  Note: This file includes [common/properties].inc.php . Make sure not to include them, or use include_once. 
 */
-include_once(dirname(__FILE__) . "/common.inc.php");
+include_once(getEnv("DOCUMENT_ROOT") . "/includes/db/common.inc.php");
 
 /*
  Returns an array of user information for the specified user or
@@ -146,8 +146,10 @@ function user_add($firstname, $lastname, $class, $email, $country, $affiliation,
 		return false;
 	}
 	
-	$query = sprintf("INSERT INTO user (firstname,lastname,email,country,affiliation,userclass_id,password_hash, activation_key) 
-VALUES('%s', '%s', '%s','%s','%s','%s','%s','%s')",
+	//@TODO: THIS IS A HACK to ensure that people can log in as soon as they register since it doesn't appear that activation
+	// functionality has been implemented yet. 
+	$query = sprintf("INSERT INTO user (firstname,lastname,email,country,affiliation,userclass_id,password_hash, activation_key, activated) 
+VALUES('%s', '%s', '%s','%s','%s','%s','%s','%s','1')",
 					$firstname,
 					$lastname,
 					$email,
